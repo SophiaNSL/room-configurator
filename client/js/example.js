@@ -29,6 +29,18 @@ var CameraButtons = function(blueprint3d) {
     $("#2DButton").click(three.twoDCamera);
     $("#middleViewButton").click(three.middleCamera);
     $("#3DButton").click(three.threeDCamera);
+
+
+    $(document).on('mouseup touchend', function(event) {
+      var offCanvas = $('.off-canvas')
+      if (!offCanvas.is(event.target) && offCanvas.has(event.target).length === 0) {
+        $('body').removeClass('off-canvas-active')
+      }
+    });
+    
+
+
+
     $(document).on('mouseup touchend', function(event) {
       var offCanvas = $('.off-canvas')
       if (!offCanvas.is(event.target) && offCanvas.has(event.target).length === 0) {
@@ -129,6 +141,14 @@ var ContextMenu = function(blueprint3d) {
     return inches * 2.54;
   }
 
+  function cmToMm(cm) {
+    return cm * 10;
+  }
+
+  function cmtomm(cm) {
+    return cm * 0.1;
+  }
+
 
   function itemSelected(item) {
     selectedItem = item;
@@ -190,11 +210,11 @@ var ContextMenu = function(blueprint3d) {
     $("#itemLegs").text(item.metadata.itemLegs);
 
 
-    $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
-    $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
-    $("#item-depth").val(cmToIn(selectedItem.getDepth()).toFixed(0));
-
+   $("#item-width").val(cmToMm(selectedItem.getWidth()).toFixed(0));
+    $("#item-height").val(cmToMm(selectedItem.getHeight()).toFixed(0));
+    $("#item-depth").val(cmToMm(selectedItem.getDepth()).toFixed(0));
     $("#context-menu").show();
+
 
     $("#fixed").prop('checked', item.fixed);
   }
@@ -218,12 +238,12 @@ var ContextMenu = function(blueprint3d) {
  
     }
   }
-
+  
   function resize() {
     selectedItem.resize(
-      inToCm($("#item-height").val()),
-      inToCm($("#item-width").val()),
-      inToCm($("#item-depth").val())
+      cmtomm($("#item-height").val()),
+      cmtomm($("#item-width").val()),
+      cmtomm($("#item-depth").val())
     );
   }
 
@@ -803,6 +823,21 @@ $(document).ready(function() {
   var textureSelector = new TextureSelector(blueprint3d, sideMenu);        
   var cameraButtons = new CameraButtons(blueprint3d);
   mainControls(blueprint3d);
+
+
+
+  $('[data-toggle=offcanvas]').click(function() {
+    $('.row-offcanvas').toggleClass('active');
+    $('.main').toggleClass('active');
+    $('.sidebar').toggleClass('active');
+  });
+
+
+
+
+
+
+
   // emailLink function
   emailLink(blueprint3d);
 

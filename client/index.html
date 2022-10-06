@@ -2,9 +2,12 @@
 <html>
   <head>
     <title>Room Configurator</title>
-
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/example.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.offcanvas.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e779bba2dd.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type ="module" src="js/example.js" defer></script>
@@ -12,8 +15,7 @@
     <script src="js/blueprint3d.js"></script>
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
-    <script src="js/items.js"></script>
-    
+    <script src="js/items.js"></script>    
     
   <!--Email js-->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
@@ -22,7 +24,6 @@
           emailjs.init("user_ZHLQD8EFx3MneCcXv9s3B");
       })();
   </script>
-
   </head>
 
   <body>
@@ -45,12 +46,9 @@
     </div>
 
     <nav>
-      <div class="nav-img">
-        
+      <div class="nav-img">      
         <img src="./img/logo.png" alt="logo" >
       </div>
-      
-
       <ul class="nav-ul">
         <a href=""><li>HOME</li></a>
         <a href=""><li>ABOUT</li></a>
@@ -65,27 +63,211 @@
     </nav>
 
     <div class="container-fluid">
+      <div class="row row-offcanvas row-offcanvas-right" id="offcanvas" aria-labelledby="offCanvas">
+        <div class="col-xs-3 rightbar-offcanvas" id="rightbar" aria-labelledby="offcanvasRight">
+          <div id="rightside-menu">
+            <div class="popout-sidebar-wrapper side-panel-open">
+              <div class="popout-sidebar-main"></div>
+             <!-- Side Panel -->
+              <div class="side-panel">
+                    <ul class="nav nav-tabs right-tabs">
+                      <li id="room_tab" ><a href="#" style="color:black">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Summary
+                      </a></li>
+                      <li id="objects_tab"><a href="#" style="color:black">
+                        <img src="./img/products.svg" alt="products" style="height: 20px; width: 20px">
+                        Options
+                      </a></li> 
+                    </ul>
+                    <hr />
+  
+                     <!-- Room Tab -->
+            <div id="room-tab-content" style="display: none;">
+  
+              <div class="part-list">
+                  <table class="room-table">
+                    <thead>
+                      <tr>
+                        <th style="width: 20%">Part No.</th>
+                        <th style="width: 60%">Description</th>
+                        <!-- <th>Qty</th> -->
+                        <th style="width: 20%">Price</th>
+                        <!-- <th>Sub-total</th> -->
+                        <!-- <th>Total</th> -->
+                      </tr>
+                    </thead>
+                    <tbody id="romm-table-tbody">
+                    <!-- Add table content here by example.js -->
+                     
+                    </tbody>
+                  </table>
+                  <div id="totalPrice"></div>
+              </div>
+  
+              <div class="room-tab-buttons">
+                  <div class="btn-row">
+                      <button class="right-side-bar-btn" id="rs-render-btn"><i class="fa-solid fa-camera cart-icon"></i>Render</button>
+                      <button class="right-side-bar-btn" id="rs-save-btn"><i class="fa-solid fa-envelope cart-icon"></i>Email</button>                     
+                  </div>
+                  <div class="btn-row">                    
+                      <button class="right-side-bar-btn" id="rs-quote-btn"><i class="fa-regular fa-file-lines cart-icon"></i>Quote</button>
+                      <button class="right-side-bar-btn" id="rs-order-btn"><i class="fa-solid fa-cart-shopping cart-icon"></i>Order</button>
+                  </div>
+                  
+              </div>            
+  
+          </div>
+          <!-- End of Room Tab -->
+  
+          <!-- Objects Tab -->
+          <div id="objects-tab-content" >
+              <!-- Context-menu -->
+              <div id="context-menu">
+                <div style="margin: 10px 20px">
+                  <br>
+                  <span id="context-menu-name" class="object-text-style" style="font-size: 1.8rem"></span>
+                  <br /> <br />
+  
+                  <span class="object-text-style">Price:$</span><span id="itemPrice" class="object-text-style"></span>
+                  <br /> <br />
+  
+                  <button class="btn btn-block btn-danger" id="context-menu-delete">
+                    <span class="glyphicon glyphicon-trash"></span> 
+                    Delete Item
+                  </button>
+                <br />
+  
+                <!-- Color -->
+                <div class="color-title object-text-style" >Materials</div>
+                <div class="color-container">
+                    <!-- <div class="color red">1</div>
+                    <div class="color green">2</div>
+                    <div class="color blue">3</div> -->
+                    <img src="./img/color/color1.png" alt="">
+                    <img src="./img/color/color2.png" alt="">
+                    <img src="./img/color/color3.png" alt="">
+                </div>
+                <br />
+  
+                <!-- Size -->
+                <div class="size-title object-text-style">Variations</div>
+                <div class="size-container">
+                    <div class="size">S</div>
+                    <div class="size">M</div>
+                    <div class="size">L</div>
+                </div>
+                <br />
+  
+                <div class="object-text-style">Technical Data</div>
+                <table class="object-table">
+                  <tr>
+                    <td>Dimensions</td>
+                    <td id="itemDimensions">1</td>
+                  </tr>
+                  <tr>
+                    <td>Weight</td>
+                    <td id="itemWeight">2</td>
+                  </tr>
+                  <tr>
+                    <td>Fabric</td>
+                    <td id="itemFabric">3</td>
+                  </tr>
+                  <tr>
+                    <td>Legs</td>
+                    <td id="itemLegs">4</td>
+                  </tr>
+                </table>
+  
+                <br>
+  
+                <div class="object-text-style"><a href="https://www.designconsulting.com.au/" target="_blank"> More details</a>
+                 </div>
+                </div>
+              </div>
+              <!-- End of Context-menu -->
+  
+              <!-- Floor textures -->
+              <div id="floorTexturesDiv" style="display:none; padding: 20px 20px">
+                <div class="panel panel-default">
+                  <div class="panel-heading">Adjust Floor</div>
+                  <div class="panel-body" style="color: #333333">
+  
+                    <div class="col-sm-6" style="padding: 3px">
+                      <a href="#" class="thumbnail texture-select-thumbnail" texture-url="rooms/textures/light_fine_wood.jpg" texture-stretch="false" texture-scale="300">
+                        <img alt="Thumbnail light fine wood" src="rooms/thumbnails/thumbnail_light_fine_wood.jpg" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End of Floor textures -->
+  
+              <!-- Wall Textures -->
+              <div id="wallTextures" style="display:none; padding: 20px 20px">
+                <div class="panel panel-default">
+                  <div class="panel-heading">Adjust Wall</div>
+                  <div class="panel-body" style="color: #333333">
+                    <div class="col-sm-6" style="padding: 3px">
+                      <a href="#" class="thumbnail texture-select-thumbnail" texture-url="rooms/textures/marbletiles.jpg" texture-stretch="false" texture-scale="300">
+                        <img alt="Thumbnail marbletiles" src="rooms/thumbnails/thumbnail_marbletiles.jpg" />
+                      </a>
+                    </div>
+                    <div class="col-sm-6" style="padding: 3px">
+                      <a href="#" class="thumbnail texture-select-thumbnail" texture-url="rooms/textures/wallmap_yellow.png" texture-stretch="true" texture-scale="">
+                        <img alt="Thumbnail wallmap yellow" src="rooms/thumbnails/thumbnail_wallmap_yellow.png" />
+                      </a>
+                    </div>
+                    <div class="col-sm-6" style="padding: 3px">
+                      <a href="#" class="thumbnail texture-select-thumbnail" texture-url="rooms/textures/light_brick.jpg" texture-stretch="false" texture-scale="100">
+                        <img alt="Thumbnail light brick" src="rooms/thumbnails/thumbnail_light_brick.jpg" />
+                      </a>
+                    </div>
+                    
+                   
+                  </div>
+                  <div class="form-check allWall">
+                    <input class="form-check-input" type="checkbox" name="allwall" id="allwallcheckbox">
+                    <label class="form-check-label" for="flexCheckChecked">All Walls</label>
+                  </div>
+                  <p>Pick the wall color</p>
+                </div>
+              </div>
+              <!--End of Wall Textures -->
+  
+          </div>
+          <!-- End of Objects Tab -->
+  
+         
+        </div>
+  
+            <!-- end of side panel -->
+              </div>
+            <!-- end of popout-sidebar wrapper -->
+
+
+
+            
+        </div>
+      </div>
       <div class="row main-row">
         <!-- Left Column -->
-        <div class="col-xs-2 sidebar" id="left-column">
+        <div class="col-xs-3 sidebar" aria-labelledby="offcanvasRight">
           <!-- Main Navigation -->
           <ul class="nav nav-tabs">
             <li id="floorplan_tab"><a href="#">
-              <i class="fa-regular fa-square"></i>
               Room
               <div class="icon-container tabIcon">
                 <span class="i-item"></span>            
               </div>
             </a></li>
             <li id="design_tab"><a href="#">
-              <i class="fa-brands fa-unity"></i>
               Layout
               <div class="icon-container tabIcon">
                 <span class="i-layout"></span>            
               </div>
             </a></li>
             <li id="items_tab"><a href="#">
-              <img src="./img/products.svg" alt="products" style="height: 20px; width: 20px">
               Products
               <div class="icon-container tabIcon">
                 <span class="i-products"></span>            
@@ -93,75 +275,80 @@
             </a></li>
           </ul>
           <hr />
+
         </div>
 
         <!-- Right Column -->
-        <div class="col-xs-8 main" id="middle-column">
+        <div class="col-xs-9 main" aria-labelledby="offcanvasRight">
 
           <!-- 3D Viewer -->
           <div id="viewer">
 
             <div id="main-controls">
-                <div class="left-controls">
-                  <a href="#"  id="new" class="main-controls-anchor">
-                    <!-- New plan -->
-                    <img src="./img/new.svg" alt="new file" style="height: 40px;width:40px">
-                    <span class="main-controls-tooltip new-plan">new plan</span>
-                  </a>
-    
-                  <a href="#" id="saveFile" class="main-controls-anchor">
-                    <!-- Save plan -->
-                    <img src="./img/save.svg" alt="save plan" style="height: 30px;width:30px">
-                    <span class="main-controls-tooltip save-plan">save plan</span>
-                  </a>
-   
-                  <a class="btn-file" class="main-controls-anchor">
-                    <input type="file" class="hidden-input" id="loadFile">
-                    <!-- Load plan -->
-                    <img src="./img/load.svg" alt="load plan" style="height: 40px;width:40px">
-                    <!-- <span class="main-controls-tooltip">load plan</span> -->
-                  </a>
-                  
- 
+              <a href="#" class="btn btn-default btn-sm" id="new">
+                <span class="tooltiptext">New File</span>
+                <div class="icon-container">
+                  <span class="i-new-file"></span>            
                 </div>
+              </a>
+              <a href="#" class="btn btn-default btn-sm" id="saveFile">
+                <span class="tooltiptext">Save</span>
+                <div class="icon-container">
+                  <span class="i-save-file"></span>
+                </div>
+              </a>
+              <a class="btn btn-default btn-sm btn-file">
+                <div class="icon-container">
+                  <span class="i-open-file"></span>
+                 </div>
+                <span class="tooltiptext">Open File</span>
+               <input type="file" class="hidden-input" id="loadFile">
+              </a>
+            </div>
+            <a href="#" class="btn btn-default btn-sm pull-right btnRender" id="render" data-toggle="modal" data-target="#saveModal">
+              <span class="tooltiptext">Render</span>
+              <div class="icon-container">
+                <span class="i-render"></span>
+              </div>
+            </a>
+            <a href="#" class="btn btn-default btn-sm pull-right btnRightBar" id="rightBar" data-toggle="offcanvas" data-bs-target="#offcanvasRight">
+              <span class="glyphicon glyphicon-arrow-right"></span>
+              <br>
+              <span class="glyphicon glyphicon-arrow-left"></span>
+            </a>
 
-                <div class="right-controls">
-                  <!-- Render -->
-                    <a href="#" id="render" class="main-controls-anchor">
-                      <img src="./img/render.svg" alt="render" style="height: 40px;width:40px">
-                      <span class="main-controls-tooltip render">render</span>
-                    </a>
-                </div>
-                     
-            </div> 
-            
-            <!-- Camera Controls -->
             <div id="camera-controls">
               <a href="#" class="btn btn-default bottom" id="zoom-out">
                 <span class="glyphicon glyphicon-zoom-out"></span>
                 <span class="tooltiptext">Zoom Out</span>
               </a>
+            
               <a href="#" class="btn btn-default bottom" id="zoom-in">
                 <span class="glyphicon glyphicon-zoom-in"></span>
                 <span class="tooltiptext">Zoom In</span>
               </a>
               <a href="#" class="btn btn-default bottom" id="middleViewButton">
-                <span class="glyphicon glyphicon glyphicon-home"></span>
                 <span class="tooltiptext">Isometric View</span>
+                <div class="icon-container">
+                  <span class="i-house"></span>
+              </div>
               </a>
               <a href="#" class="btn btn-default bottom" id="3DButton">
-                <i class="fa-brands fa-unity"></i>
                 <span class="tooltiptext">3D View</span>
+                <div class="icon-container">
+                  <span class="i-cube"></span>
+                </div>
               </a>
-
               <a href="#" class="btn btn-default bottom" id="2DButton">
-                <span class="glyphicon glyphicon-unchecked"></span>
                 <span class="tooltiptext">2D Top View</span>
+                <div class="icon-container">
+                  <span class="i-rectangle"></span>
+                </div>
               </a>
               
               <span>&nbsp;</span>
 
-              <a class="btn btn-default bottom" href="#" id="move-left" >
+              <a class="btn btn-default" href="#" id="move-left" >
                 <span class="glyphicon glyphicon-arrow-left"></span>
               </a>
               <span class="btn-group-vertical">
@@ -172,7 +359,7 @@
                   <span class="glyphicon glyphicon-arrow-down"></span>
                 </a>
               </span>
-              <a class="btn btn-default bottom" href="#" id="move-right" >
+              <a class="btn btn-default" href="#" id="move-right" >
                 <span class="glyphicon glyphicon-arrow-right"></span>
               </a>
             </div>
@@ -186,26 +373,26 @@
           <div id="floorplanner">
             <canvas id="floorplanner-canvas"></canvas>
             <div id="floorplanner-controls">
-
+              
+             
               <button class="btn btn-sm btn-default btnRoom" data-toggle="modal" data-target="#roomModal">
                 <span class="glyphicon glyphicon-pushpin"></span>
                 Change Room Shape
               </button>
-
-              <button id="move" class="btn btn-sm btn-default">
+              <button id="move" class="btn btn-sm btn-default btnRoom">
                 <span class="glyphicon glyphicon-move"></span>
                 Move Walls
               </button>
-              <button id="draw" class="btn btn-sm btn-default">
+              <button id="draw" class="btn btn-sm btn-default btnRoom">
                 <span class="glyphicon glyphicon-pencil"></span>
                 Draw Walls
               </button>
-              <button id="delete" class="btn btn-sm btn-default">
+              <button id="delete" class="btn btn-sm btn-default btnRoom">
                 <span class="glyphicon glyphicon-remove"></span>
                 Delete Walls
               </button>
               <span class="pull-right">
-                <button class="btn btn-primary btn-sm" id="update-floorplan">Done &raquo;</button>
+                <button class="btn btn-primary btn-sm btnRoom" id="update-floorplan">Done &raquo;</button>
               </span>
 
             </div>
@@ -213,7 +400,8 @@
               Press the "Esc" key to stop drawing walls
             </div>
 
-            <!-- Modal -->
+          <!-- Modal -->
+
             <!-- Room Modal -->
             <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
@@ -241,215 +429,50 @@
                 </div>
               </div>
             </div>
-         <!-- end of Modal -->
+
           </div>
-          
-   <!-- Add Items -->
+
+          <!-- Add Items -->
           <div id="add-items">
             <div class="row" id="items-wrapper">
 
               <!-- Items added here by items.js -->
             </div>
           </div>
-      
         </div>
         <!-- End Right Column -->
+        <!-- RightBar -->
 
-        <!-- Right side bar -->
-        <div class="col-xs-2 right-side-bar" id="right-column">
-          
-          <div class="popout-sidebar-wrapper side-panel-open">
-            <div class="popout-sidebar-main"></div>
-            <button class="side-panel-toggle" type="button">
-                <i class="fa-solid fa-angles-left sp-icon-open"></i>
-                <i class="fa-solid fa-angles-right sp-icon-close"></i>
-            </button>
-           
-           <!-- Side Panel -->
-            <div class="side-panel">
-                  <ul class="nav nav-tabs right-tabs">
-                    <li id="room_tab" ><a href="#" style="color:black">
-                      <i class="fa-solid fa-cart-shopping"></i>
-                      Summary
-                      <div class="icon-container tabIcon">
-                        <span class="i-item"></span>            
+          <!-- Save Modal -->
+          <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title w-100 font-weight-bold">Save</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-body">
+                  <div class="d-flex flex-column text-center">
+                    <form>
+                      <div class="form-group">
+                        <input type="email" class="form-control" id="email1"placeholder="Your name..."">
                       </div>
-                    </a></li>
-                    <li id="objects_tab"><a href="#" style="color:black">
-                      <img src="./img/products.svg" alt="products" style="height: 20px; width: 20px">
-                      Options
-                      <div class="icon-container tabIcon">
-                        <span class="i-layout"></span>            
+                      <div class="form-group">
+                        <input type="password" class="form-control" id="password1" placeholder="Your email...">
                       </div>
-                    </a></li>
-                   
-                  </ul>
-                  <hr />
-
-                   <!-- Room Tab -->
-          <div id="room-tab-content" style="display: none;">
-
-            <div class="part-list">
-                <table class="room-table">
-                  <thead>
-                    <tr>
-                      <th style="width: 20%">Part No.</th>
-                      <th style="width: 60%">Description</th>
-                      <!-- <th>Qty</th> -->
-                      <th style="width: 20%">Price</th>
-                      <!-- <th>Sub-total</th> -->
-                      <!-- <th>Total</th> -->
-                    </tr>
-                  </thead>
-                  <tbody id="romm-table-tbody">
-                  <!-- Add table content here by example.js -->
-                   
-                  </tbody>
-                </table>
-                <div id="totalPrice"></div>
-            </div>
-
-            <div class="room-tab-buttons">
-                <div class="btn-row">
-                    <button class="right-side-bar-btn" id="rs-render-btn"><i class="fa-solid fa-camera cart-icon"></i>Render</button>
-                    <button class="right-side-bar-btn" id="rs-save-btn"><i class="fa-solid fa-envelope cart-icon"></i>Email</button>                     
+                    </form>
                 </div>
-                <div class="btn-row">                    
-                    <button class="right-side-bar-btn" id="rs-quote-btn"><i class="fa-regular fa-file-lines cart-icon"></i>Quote</button>
-                    <button class="right-side-bar-btn" id="rs-order-btn"><i class="fa-solid fa-cart-shopping cart-icon"></i>Order</button>
-                </div>
-                
-            </div>            
-
-        </div>
-        <!-- End of Room Tab -->
-
-        <!-- Objects Tab -->
-        <div id="objects-tab-content" >
-            <!-- Context-menu -->
-            <div id="context-menu">
-              <div style="margin: 10px 20px">
-                <br>
-                <span id="context-menu-name" class="object-text-style" style="font-size: 1.8rem"></span>
-                <br /> <br />
-
-                <span class="object-text-style">Price:$</span><span id="itemPrice" class="object-text-style"></span>
-                <br /> <br />
-
-                <button class="btn btn-block btn-danger" id="context-menu-delete">
-                  <span class="glyphicon glyphicon-trash"></span> 
-                  Delete Item
-                </button>
-              <br />
-
-              <!-- Color -->
-              <div class="color-title object-text-style" >Materials</div>
-              <div class="color-container">
-                  <!-- <div class="color red">1</div>
-                  <div class="color green">2</div>
-                  <div class="color blue">3</div> -->
-                  <img src="./img/color/color1.png" alt="">
-                  <img src="./img/color/color2.png" alt="">
-                  <img src="./img/color/color3.png" alt="">
-              </div>
-              <br />
-
-              <!-- Size -->
-              <div class="size-title object-text-style">Variations</div>
-              <div class="size-container">
-                  <div class="size">S</div>
-                  <div class="size">M</div>
-                  <div class="size">L</div>
-              </div>
-              <br />
-
-              <div class="object-text-style">Technical Data</div>
-              <table class="object-table">
-                <tr>
-                  <td>Dimensions</td>
-                  <td id="itemDimensions">1</td>
-                </tr>
-                <tr>
-                  <td>Weight</td>
-                  <td id="itemWeight">2</td>
-                </tr>
-                <tr>
-                  <td>Fabric</td>
-                  <td id="itemFabric">3</td>
-                </tr>
-                <tr>
-                  <td>Legs</td>
-                  <td id="itemLegs">4</td>
-                </tr>
-              </table>
-
-              <br>
-
-              <div class="object-text-style"><a href="https://www.designconsulting.com.au/" target="_blank"> More details</a>
-               </div>
-              </div>
-            </div>
-            <!-- End of Context-menu -->
-
-            <!-- Floor textures -->
-            <div id="floorTexturesDiv" style="display:none; padding: 20px 20px">
-              <div class="panel panel-default">
-                <div class="panel-heading">Adjust Floor</div>
-                <div class="panel-body" style="color: #333333">
-
-                  <div class="col-sm-6" style="padding: 3px">
-                    <a href="#" class="thumbnail texture-select-thumbnail" texture-url="rooms/textures/light_fine_wood.jpg" texture-stretch="false" texture-scale="300">
-                      <img alt="Thumbnail light fine wood" src="rooms/thumbnails/thumbnail_light_fine_wood.jpg" />
-                    </a>
-                  </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary">Save</button>
                 </div>
               </div>
             </div>
-            <!-- End of Floor textures -->
-
-            <!-- Wall Textures -->
-            <div id="wallTextures" style="display:none; padding: 20px 20px">
-              <div class="panel panel-default">
-                <div class="panel-heading">Adjust Wall</div>
-                <div class="panel-body" style="color: #333333">
-                  <div class="col-sm-6" style="padding: 3px">
-                    <a href="#" class="thumbnail texture-select-thumbnail" texture-url="rooms/textures/marbletiles.jpg" texture-stretch="false" texture-scale="300">
-                      <img alt="Thumbnail marbletiles" src="rooms/thumbnails/thumbnail_marbletiles.jpg" />
-                    </a>
-                  </div>
-                  <div class="col-sm-6" style="padding: 3px">
-                    <a href="#" class="thumbnail texture-select-thumbnail" texture-url="rooms/textures/wallmap_yellow.png" texture-stretch="true" texture-scale="">
-                      <img alt="Thumbnail wallmap yellow" src="rooms/thumbnails/thumbnail_wallmap_yellow.png" />
-                    </a>
-                  </div>
-                  <div class="col-sm-6" style="padding: 3px">
-                    <a href="#" class="thumbnail texture-select-thumbnail" texture-url="rooms/textures/light_brick.jpg" texture-stretch="false" texture-scale="100">
-                      <img alt="Thumbnail light brick" src="rooms/thumbnails/thumbnail_light_brick.jpg" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--End of Wall Textures -->
-
-        </div>
-        <!-- End of Objects Tab -->
-
-       
-      </div>
-
-          <!-- end of side panel -->
-            </div>
-          <!-- end of popout-sidebar wrapper -->
           </div>
-
-        <!-- End of right side bar -->
-      </div>
-    </div>
-     
-   
-
-
+          </div>      
+  </div>
+  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.2.3/jspdf.plugin.autotable.js"></script>   
